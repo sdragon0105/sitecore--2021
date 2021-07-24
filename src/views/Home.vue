@@ -1,6 +1,8 @@
 <template>
   <div class="container background_img_style">
-    <div style="background: black; opacity: 0.5; z-index: 1; height: 100vh; width: 100vw; position: absolute; top: 0; left: 0;"></div>
+    <div
+      style="background: black; opacity: 0.4; z-index: 1; height: 100vh; width: 100vw; position: absolute; top: 0; left: 0;"
+    ></div>
     <div>
       <b-alert
         :show="dismissCountDown"
@@ -8,7 +10,7 @@
         variant="warning"
         @dismissed="dismissCountDown = 0"
         @dismiss-count-down="countDownChanged"
-         style="z-index: 2;"
+        style="z-index: 2;"
       >
         Your unique code is {{ generate_num }}.
       </b-alert>
@@ -17,7 +19,7 @@
       </b-button> -->
     </div>
     <!-- <img src="../assets/main_background.jpeg" class="background_img_style"> -->
-    <img src="../assets/logo.png" class="logo_img_style" style="z-index: 2"/>
+    <img src="../assets/logo.png" class="logo_img_style" style="z-index: 2" />
     <div class="content_style">
       <h2 class="header_style">Welcome to the Sitecore Team</h2>
       <p class="subtext_style">
@@ -38,76 +40,48 @@
           TO RECEIVE YOUR SITECORE<br />
           NEW-HIRE GIFT<br />
         </p>
-        <div
-          v-if="generate_btn"
-          style="width: 250px; display: flex; justify-content: center"
-        >
-          <button
-            type="button"
-            class="btn btn-success btn-lg"
-            @click="showAlert"
-            variant="info"
-          >
-            Generate
-          </button>
-        </div>
-        <template v-else>
-          <div class="text_btn_style">
-            <input type="text" class="txt_style" maxlength="6" />
-            <div class="btn_style" @click="match">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="32"
-                height="32"
-                fill="white"
-                class="bi bi-chevron-right"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"
-                />
-              </svg>
-            </div>
+
+        <div class="text_btn_style">
+          <input type="text" class="txt_style" maxlength="6" />
+          <div class="btn_style" @click="match">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              fill="white"
+              class="bi bi-chevron-right"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"
+              />
+            </svg>
           </div>
-        </template>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import Router from '@/router/index.js'
+import Router from "@/router/index.js";
 
 export default {
   name: "Home",
 
   data() {
     return {
-      generate_btn: true,
-      dismissSecs: 5,
-      dismissCountDown: 0,
+
       generate_num: 0,
     };
   },
 
   methods: {
-    //  countDownChanged(dismissCountDown) {
-    //    this.dismissCountDown = dismissCountDown;
-    //  },
-    showAlert() {
-      //   this.dismissCountDown = this.dismissSecs;
-      this.generate_btn = false;
-      this.generate_num = Number.parseInt(Math.random() * 1000000);
-      this.dismissCountDown = this.generate_num;
-
-    },
     match() {
-      if (this.generate_num == document.querySelector(".txt_style").value)
-      {
+      if (this.generate_num == document.querySelector(".txt_style").value) {
         Router.push({ path: "/user-info" });
-      }
-      else {
+      } else {
         // this.generate_btn = false;
         Router.push({ path: "/" });
       }
@@ -144,14 +118,14 @@ export default {
 }
 .header_style {
   color: white;
-  font-family: 'AvenirNextLTPro-Bold';
-  font-size: 86px;
+  font-family: "AvenirNextLTPro-Bold";
+  font-size: 5.2em;
   max-width: 750px;
   line-height: 100%;
   z-index: 2;
 }
 .content_style {
-  width: 600px;
+  width: 730px;
   height: 100%;
   margin: auto;
   display: flex;
@@ -168,8 +142,8 @@ export default {
 }
 .subtext_style {
   color: white;
-  font-family: 'AvenirNextLTPro-Regular';
-  font-size: 19px;
+  font-family: "AvenirNextLTPro-Regular";
+  font-size: 22px;
   line-height: normal;
   max-width: 650px;
   min-width: 600px;
@@ -177,8 +151,8 @@ export default {
 }
 .label_style {
   color: white;
-  font-family: 'AvenirNextLTPro-Bold';
-  font-size: 20px;
+  font-family: "AvenirNextLTPro-Bold";
+  font-size: 26px;
   font-weight: 700;
   line-height: normal;
   z-index: 2;
@@ -206,7 +180,7 @@ export default {
 .txt_style {
   height: 70px;
   text-align: center;
-  font-family: 'AvenirNextLTPro-Regular';
+  font-family: "AvenirNextLTPro-Regular";
   font-size: 40px;
   max-width: 150px;
   border: none;

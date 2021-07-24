@@ -1,6 +1,6 @@
 <template>
   <div class="container user-info--background_img_style">
-    <div style="background: black; opacity: 0.5; z-index: 1; height: 100vh; width: 100vw; position: absolute; top: 0; left: 0;"></div>
+    <!-- <div style="background: black; opacity: 0.4; z-index: 1; height: 100vh; width: 100vw; position: absolute; top: 0; left: 0;"></div> -->
 
     <img src="../assets/logo.png" class="logo_img_style" style="z-index:2;"/>
 
@@ -110,7 +110,7 @@ export default {
 
 <style>
 .user-info--background_img_style {
-  background-image: url("../assets/sub_background.jpeg");
+  background-image: url("../assets/sub_background.png");
   height: 100vh;
   /* filter: brightness(0.7); */
   position: relative;

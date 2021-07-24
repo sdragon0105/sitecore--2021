@@ -1,14 +1,14 @@
 @import "bootstrap/scss/bootstrap.scss";
 
 .container {
-    max-width: 100%;
+    max-width: 1920px;
     padding: 0;
 }
 
 @font-face {
     font-family: 'AvenirNextLTPro-Bold';
     src:  url('AvenirNextLTPro-Bold.woff2') format('woff2');
-    font-weight: bold;
+    font-weight: normal;
     font-style: normal;
 }
 
