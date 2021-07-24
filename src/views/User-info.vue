@@ -118,8 +118,8 @@ export default {
   background-position: center;
 }
 .logo_img_style {
-  width: 210px;
-  height: 70px;
+  width: 259px;
+  height: 56px;
   position: absolute;
   top: 50px;
   left: 60px;

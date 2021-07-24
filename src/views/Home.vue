@@ -128,7 +128,7 @@ export default {
 
 <style>
 .background_img_style {
-  background-image: url("../assets/main_background.jpeg");
+  background-image: url("../assets/main_background.png");
   height: 100vh;
   /* filter: brightness(0.7); */
   position: relative;
@@ -136,8 +136,8 @@ export default {
   background-position: center;
 }
 .logo_img_style {
-  width: 210px;
-  height: 70px;
+  width: 259px;
+  height: 56px;
   position: absolute;
   top: 50px;
   left: 60px;
@@ -145,9 +145,8 @@ export default {
 .header_style {
   color: white;
   font-family: 'AvenirNextLTPro-Bold';
-  font-weight: 700;
-  font-size: 75px;
-  max-width: 650px;
+  font-size: 86px;
+  max-width: 750px;
   line-height: 100%;
   z-index: 2;
 }
