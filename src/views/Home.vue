@@ -3,21 +3,6 @@
     <div
       style="background: black; opacity: 0.4; z-index: 1; height: 100vh; width: 100vw; position: absolute; top: 0; left: 0;"
     ></div>
-    <div>
-      <b-alert
-        :show="dismissCountDown"
-        dismissible
-        variant="warning"
-        @dismissed="dismissCountDown = 0"
-        @dismiss-count-down="countDownChanged"
-        style="z-index: 2;"
-      >
-        Your unique code is {{ generate_num }}.
-      </b-alert>
-      <!-- <b-button @click="showAlert" variant="info" class="m-1">
-        Show alert with count-down timer
-      </b-button> -->
-    </div>
     <!-- <img src="../assets/main_background.jpeg" class="background_img_style"> -->
     <img src="../assets/logo.png" class="logo_img_style" style="z-index: 2" />
     <div class="content_style">
@@ -42,8 +27,8 @@
         </p>
 
         <div class="text_btn_style">
-          <input type="text" class="txt_style" maxlength="6" />
-          <div class="btn_style" @click="match">
+          <input type="text" class="txt_style" maxlength="5" v-model="User_code"/>
+          <div class="btn_style" @click="loadItems">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="32"
@@ -67,36 +52,65 @@
 <script>
 import Router from "@/router/index.js";
 
+const apiToken = "keydSn3PkyRUyOhki";
+const airTableApp = "appGXFmlt4gs1VvVA";
+const airTableName = "UserInfo";
+
 export default {
   name: "Home",
 
   data() {
     return {
 
-      generate_num: 0,
+      headers: [
+            { text: 'Id', value: 'id' },
+            { text: 'User_Code', value: 'User_Code' },
+            { text: 'Name', value: 'Name' },
+            { text: 'Sur Name', value: 'sur Name' },
+            { text: 'Start Date', value: 'date' },
+            { text: 'Email', value: 'email' },
+            { text: 'Mobil Phone', value: 'mobile phone' },
+            { text: 'Hoodie Size', value: 'hoodie size' },
+            { text: 'Delivery Address', value: 'delivery address' },
+            { text: 'Postal code', value: 'postal code' },
+            { text: 'Country', value: 'country' },
+            { text: 'Notes', value: 'notes' },
+        ],
+      items: [],
     };
   },
 
   methods: {
-    match() {
-      if (this.generate_num == document.querySelector(".txt_style").value) {
-        Router.push({ path: "/user-info" });
-      } else {
-        // this.generate_btn = false;
-        Router.push({ path: "/" });
-      }
+    loadItems() {
+      this.items = [];
+      this.axios
+        .get(`https://api.airtable.com/v0/${airTableApp}/${airTableName}`, {
+          headers: { Authorization: "Bearer " + apiToken }
+        })
+        .then((response) => {
+          this.items = response.data.records.map((item) => {
+            return {
+              id: item.id,
+              ...item.fields,
+            };
+          });
+          for(let i=0; i<this.items.length; i++){
+            if(this.items[i].User_Code == this.User_code){
+              this.$store.commit('setCode', this.items[i].User_Code);
+              this.$store.commit('setId', this.items[i].id);
+              Router.push({ path: "/user-info" });
+               console.log( this.$User_Code_G);
+                console.log(this.$Id_G);
+            }
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          this.User_code = "";
+          Router.push({ path: "/" });
+        });
     },
   },
-
-  //   async mounted() {
-  //     try {
-  //       await this.initialLoad();
-  //       this.loading = false;
-  //     } catch (error) {
-  //       this.loading = false;
-  //       this.error = true;
-  //     }
-  //   },
 };
 </script>
 
@@ -120,12 +134,12 @@ export default {
   color: white;
   font-family: "AvenirNextLTPro-Bold";
   font-size: 5.2em;
-  max-width: 750px;
+  max-width: 100%;
   line-height: 100%;
   z-index: 2;
 }
 .content_style {
-  width: 730px;
+  width: 40%;
   height: 100%;
   margin: auto;
   display: flex;
@@ -135,18 +149,13 @@ export default {
   text-align: left;
   z-index: 2;
 }
-@media (max-width: 600px) {
-  .content_style {
-    width: 100% !important;
-  }
-}
+
 .subtext_style {
   color: white;
   font-family: "AvenirNextLTPro-Regular";
   font-size: 22px;
   line-height: normal;
-  max-width: 650px;
-  min-width: 600px;
+  max-width: 100%;
   z-index: 2;
 }
 .label_style {
@@ -167,9 +176,9 @@ export default {
   justify-content: space-around;
   align-items: center;
   background-color: white;
-  width: 260px;
-  height: 80px;
-  margin: 0 15px;
+  width: 330px;
+  height: 90px;
+  margin-left: 35px;
 }
 .btn_style {
   background-color: rgb(28, 166, 163);
@@ -181,9 +190,10 @@ export default {
   height: 70px;
   text-align: center;
   font-family: "AvenirNextLTPro-Regular";
-  font-size: 40px;
-  max-width: 150px;
+  font-size: 47px;
+  max-width: 210px;
   border: none;
+  padding-top: 11px;
 }
 .txt_style:focus-visible {
   outline: none;
