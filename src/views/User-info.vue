@@ -2,7 +2,9 @@
   <div class="container user-info--background_img_style">
     <!-- <div style="background: black; opacity: 0.4; z-index: 1; height: 100vh; width: 100vw; position: absolute; top: 0; left: 0;"></div> -->
 
-    <img src="../assets/logo.png" class="logo_img_style" style="z-index:2;" />
+    <a href="/"
+      ><img src="../assets/logo.png" class="logo_img_style" style="z-index:2;"
+    /></a>
 
     <div v-if="user_info" class="user-info--content_style">
       <div class="user-info--txt_content">
@@ -14,7 +16,7 @@
           Please complete the form to<br />
           receive your new-hire gift.
         </p>
-        <a href="/user-info" class="user-info--link_txt_style"
+        <a class="user-info--link_txt_style"
           >Click here to view the<br />
           hoodie conversion chart</a
         >
@@ -91,27 +93,32 @@
           <textarea
             name="message"
             class="notes_field_style"
-            placeholder="Notes*"
+            placeholder="Notes"
             v-model="notes"
+            rows="3"
+            style="height: auto"
           >
           </textarea>
         </div>
         <div class="txt-single-contaner">
-          <p style="font-family: 'MyriadPro-Regular';">
-            This information will be processed in accordance with our privacy
-            policy<br />
+          <p style="font-family: 'MyriadPro-Regular'; margin: 0 10px;">
+            This information will be processed in accordance with our
+            <a href="https://www.sitecore.com/trust/privacy-policy" style="color: black; text-decoration: under-line;"
+              >privacy policy</a
+            ><br />
             and used only for the purpose of sending you the Sitecore new-hire
             gift.
           </p>
         </div>
         <div
           class="txt-single-contaner"
-          style="justify-content: start !important; padding: 0 20px;"
+          style="justify-content: start !important; padding: 0 10px;"
         >
           <input
             type="button"
             class="btn_style1"
             value="REDEEM NOW"
+            style="font-size: 1.5em; letter-spacing: 0.05em;"
             @click="showEditDialog()"
           />
         </div>
@@ -142,6 +149,8 @@
 </template>
 
 <script>
+import Router from "@/router/index.js";
+
 const apiToken = "keydSn3PkyRUyOhki";
 const airTableApp = "appGXFmlt4gs1VvVA";
 const airTableName = "UserInfo";
@@ -163,6 +172,17 @@ export default {
       country: "",
       notes: "",
 
+      // preferred_name: this.$store.state.g_UserData.Name,
+      // surname: this.$store.state.g_UserData.Sur_Name,
+      // start_date: this.$store.state.g_UserData.Start_Date,
+      // email: this.$store.state.g_UserData.Email,
+      // phone: this.$store.state.g_UserData.Mobile_Phone,
+      // hoodie_size: this.$store.state.g_UserData.Hoodie_Size,
+      // address: this.$store.state.g_UserData.Delivery_Address,
+      // zip_code: this.$store.state.g_UserData.Postal_Code,
+      // country: this.$store.state.g_UserData.Country,
+      // notes: this.$store.state.g_UserData.Notes,
+
       headers: [
         { text: "Id", value: "id" },
         { text: "User_Code", value: "User_Code" },
@@ -173,7 +193,7 @@ export default {
         { text: "Mobil Phone", value: "mobile phone" },
         { text: "Hoodie Size", value: "hoodie size" },
         { text: "Delivery Address", value: "delivery address" },
-        { text: "Postal code", value: "postal code" },
+        { text: "Postal Code", value: "postal code" },
         { text: "Country", value: "country" },
         { text: "Notes", value: "notes" },
       ],
@@ -183,6 +203,19 @@ export default {
     };
   },
 
+  created() {
+    this.preferred_name = this.$store.state.g_UserData.Name;
+    this.surname = this.$store.state.g_UserData.Sur_Name;
+    this.start_date = this.$store.state.g_UserData.Start_Date;
+    this.email = this.$store.state.g_UserData.Email;
+    this.phone = this.$store.state.g_UserData.Mobile_Phone;
+    this.hoodie_size = this.$store.state.g_UserData.Hoodie_Size;
+    this.address = this.$store.state.g_UserData.Delivery_Address;
+    this.zip_code = this.$store.state.g_UserData.Postal_Code;
+    this.country = this.$store.state.g_UserData.Country;
+    this.notes = this.$store.state.g_UserData.Notes;
+  },
+
   methods: {
     showEditDialog(item) {
       this.editedItem = item || {};
@@ -190,53 +223,77 @@ export default {
       this.saveItem();
     },
     saveItem() {
-      console.log(this.$store.state.g_User_Code);
-      console.log(this.$store.state.g_Id);
-      let item = {  Name: this.preferred_name,
-                    Sur_Name: this.surname,
-                    Start_Date: this.start_date,
-                    Email: this.email,
-                    Mobile_Phone: this.phone };
-      let method = "patch";
-      let id = this.$store.state.g_Id;
-      let url = `https://api.airtable.com/v0/${airTableApp}/${airTableName}/${id}`;
-      console.log(url);
+      // console.log(this.$store.state.g_User_Code);
+      // console.log(this.$store.state.g_Id);
 
-      // airtable API needs the data to be placed in fields object
-      let data = {
-        fields: item,
-      };
+      if (
+        !this.preferred_name ||
+        !this.surname ||
+        !this.start_date ||
+        !this.email ||
+        !this.phone ||
+        !this.hoodie_size ||
+        !this.address ||
+        !this.zip_code ||
+        !this.country
+      ) {
+        this.user_info = true;
+        Router.push({ path: "/user-info" });
+      } else {
+        let item = {
+          Name: this.preferred_name,
+          Sur_Name: this.surname,
+          Start_Date: this.start_date,
+          Email: this.email,
+          Mobile_Phone: this.phone,
+          Hoodie_Size: this.hoodie_size,
+          Delivery_Address: this.address,
+          Postal_Code: this.zip_code,
+          Country: this.country,
+          Notes: this.notes,
+        };
 
-      // if (id) {
-      //     // if the item has an id, we're updating an existing item
-      //     method = "patch"
-      //     url = `https://api.airtable.com/v0/${airTableApp}/${airTableName}/${id}`
+        let method = "patch";
+        let id = this.$store.state.g_Id;
+        let url = `https://api.airtable.com/v0/${airTableApp}/${airTableName}/${id}`;
 
-      //     // must remove id from the data for airtable patch to work
-      //     console.log(data.fields.id);
-      //     delete data.fields.id
-      //     console.log(data.fields.id);
-      // }
+        // airtable API needs the data to be placed in fields object
+        let data = {
+          fields: item,
+        };
 
-      // save the record
-      this.axios[method](url, data, {
-        headers: {
-          Authorization: "Bearer " + apiToken,
-          "Content-Type": "application/json",
-        },
-      }).then((response) => {
-        if (response.data && response.data.id) {
-          console.log(response.data);
-          // add new item to state
-          this.editedItem.id = response.data.id;
-          if (!id) {
-            // add the new item to items state
-            this.items.push(this.editedItem);
+        // if (id) {
+        //     // if the item has an id, we're updating an existing item
+        //     method = "patch"
+        //     url = `https://api.airtable.com/v0/${airTableApp}/${airTableName}/${id}`
+
+        //     // must emove id from the data for airtable patch to work
+        //     console.log(data.fields.id);
+        //     delete data.fields.id
+        //     console.log(data.fields.id);
+        // }
+
+        // save the record
+        this.axios[method](url, data, {
+          headers: {
+            Authorization: "Bearer " + apiToken,
+            "Content-Type": "application/json",
+          },
+        }).then((response) => {
+          if (response.data && response.data.id) {
+            console.log(response.data);
+            // add new item to state
+            this.editedItem.id = response.data.id;
+            if (!id) {
+              // add the new item to items state
+              this.items.push(this.editedItem);
+            }
+            this.editedItem = {};
+            this.user_info = false;
           }
-          this.editedItem = {};
-        }
-        this.dialog = !this.dialog;
-      });
+          this.dialog = !this.dialog;
+        });
+      }
 
       // this.axios.post('https://api.airtable.com/v0/appGXFmlt4gs1VvVA/UserInfo', {
       //                                                   preferred_name: this.preferred_name,
@@ -313,23 +370,24 @@ export default {
   z-index: 2;
 }
 .user-info--user-info-field {
-  padding: 20px 35px;
+  padding: 1.5em 2.2em;
   background-color: rgb(246, 246, 246);
   margin: 30px;
   z-index: 2;
+  font-size: 0.9vw;
 }
 .txt-double-contaner {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 20px 0;
+  margin: 1.4em 0;
 }
 .txt-double-contaner .txt_field_style {
   border: none;
   font-family: "MyriadPro-Regular";
-  font-size: 16px;
+  font-size: 1em;
   padding: 10px;
-  width: 250px;
+  width: 14vw;
   text-align: left;
   margin: 0 10px;
 }
@@ -338,16 +396,16 @@ export default {
 }
 .txt-single-contaner {
   display: flex;
-  justify-content: center;
+  justify-content: left;
   align-items: center;
-  margin: 20px 0;
+  margin: 1.4em 0;
+  font-size: 1em;
 }
 .txt-single-contaner .txt_field_style {
   border: none;
   font-family: "MyriadPro-Regular";
-  font-size: 16px;
   padding: 10px;
-  width: 520px;
+  width: calc(28vw + 20px);
   text-align: left;
   margin: 0 10px;
 }
@@ -356,9 +414,9 @@ export default {
 }
 .txt-single-contaner .notes_field_style {
   border: none;
-  font-size: 16px;
+  font-size: 1em;
   padding: 10px;
-  width: 520px;
+  width: calc(28vw + 20px);
   text-align: left;
   margin: 0 10px;
   height: 100px;
@@ -380,25 +438,27 @@ export default {
   display: flex;
 }
 .welcome_content {
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.9);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin: auto;
   z-index: 1;
-  padding: 30px 60px;
+  padding: 1em 5em;
+  font-size: 1vw;
 }
 .welcome_header {
   color: rgb(28, 166, 163);
   font-family: "AvenirNextLTPro-Bold";
+  font-size: 2em;
 }
 .welcome_sub_content {
   font-family: "AvenirNextLTPro-Regular";
-  font-size: 30px;
+  font-size: 1.5em;
 }
 .welcome_last_content {
   font-family: "AvenirNextLTPro-Regular";
-  font-size: 20px;
+  font-size: 1em;
 }
 </style>

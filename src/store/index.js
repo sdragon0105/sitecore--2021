@@ -7,6 +7,7 @@ export default new Vuex.Store({
   state: {
     g_User_Code: 0,
     g_Id: "",
+    g_UserData: []
   },
   mutations: {
     setCode(state, p) {
@@ -14,6 +15,9 @@ export default new Vuex.Store({
     },
     setId(state, p) {
       state.g_Id = p;
+    },
+    setUserData(state, p) {
+      state.g_UserData = p;
     }
   },
   actions: {

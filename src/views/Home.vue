@@ -1,10 +1,10 @@
 <template>
-  <div class="container background_img_style">
+  <div class="container background_img_style" style="overflow: hidden;">
     <div
       style="background: black; opacity: 0.4; z-index: 1; height: 100vh; width: 100vw; position: absolute; top: 0; left: 0;"
     ></div>
     <!-- <img src="../assets/main_background.jpeg" class="background_img_style"> -->
-    <img src="../assets/logo.png" class="logo_img_style" style="z-index: 2" />
+    <a href="/"><img src="../assets/logo.png" class="logo_img_style" style="z-index: 2" /></a>
     <div class="content_style">
       <h2 class="header_style">Welcome to the Sitecore Team</h2>
       <p class="subtext_style">
@@ -81,34 +81,43 @@ export default {
   },
 
   methods: {
+
     loadItems() {
-      this.items = [];
-      this.axios
-        .get(`https://api.airtable.com/v0/${airTableApp}/${airTableName}`, {
-          headers: { Authorization: "Bearer " + apiToken }
-        })
-        .then((response) => {
-          this.items = response.data.records.map((item) => {
-            return {
-              id: item.id,
-              ...item.fields,
-            };
-          });
-          for(let i=0; i<this.items.length; i++){
-            if(this.items[i].User_Code == this.User_code){
-              this.$store.commit('setCode', this.items[i].User_Code);
-              this.$store.commit('setId', this.items[i].id);
-              Router.push({ path: "/user-info" });
-               console.log( this.$User_Code_G);
-                console.log(this.$Id_G);
+      if(!this.User_code)
+      {
+        this.User_code = "";
+        Router.push({ path: "/" });
+      } else {
+        this.items = [];
+        this.axios
+          .get(`https://api.airtable.com/v0/${airTableApp}/${airTableName}`, {
+            headers: { Authorization: "Bearer " + apiToken }
+          })
+          .then((response) => {
+            this.items = response.data.records.map((item) => {
+              return {
+                id: item.id,
+                ...item.fields,
+              };
+            });
+            for(let i=0; i<this.items.length; i++){
+              if(this.items[i].User_Code == this.User_code){
+                this.$store.commit('setUserData', this.items[i]);
+                console.log(this.$store.state.g_UserData);
+                this.$store.commit('setCode', this.items[i].User_Code);
+                this.$store.commit('setId', this.items[i].id);
+                Router.push({ path: "/user-info" });
+                //  console.log( this.$User_Code_G);
+                //   console.log(this.$Id_G);
+              }
             }
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-          this.User_code = "";
-          Router.push({ path: "/" });
-        });
+          })
+          .catch((error) => {
+            console.log(error);
+            this.User_code = "";
+            Router.push({ path: "/" });
+          });
+      }
     },
   },
 };
@@ -133,7 +142,7 @@ export default {
 .header_style {
   color: white;
   font-family: "AvenirNextLTPro-Bold";
-  font-size: 5.2em;
+  font-size: 3.5em;
   max-width: 100%;
   line-height: 100%;
   z-index: 2;
@@ -148,12 +157,13 @@ export default {
   align-items: left;
   text-align: left;
   z-index: 2;
+  font-size: 1.3vw;
 }
 
 .subtext_style {
   color: white;
   font-family: "AvenirNextLTPro-Regular";
-  font-size: 22px;
+  font-size: 0.9em;
   line-height: normal;
   max-width: 100%;
   z-index: 2;
@@ -161,7 +171,7 @@ export default {
 .label_style {
   color: white;
   font-family: "AvenirNextLTPro-Bold";
-  font-size: 26px;
+  font-size: 1em;
   font-weight: 700;
   line-height: normal;
   z-index: 2;
@@ -169,6 +179,7 @@ export default {
 .unique_code_style {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   z-index: 2;
 }
 .text_btn_style {
@@ -176,9 +187,9 @@ export default {
   justify-content: space-around;
   align-items: center;
   background-color: white;
-  width: 330px;
-  height: 90px;
-  margin-left: 35px;
+  width: 50%;
+  height: 100%;
+  max-width: 300px;
 }
 .btn_style {
   background-color: rgb(28, 166, 163);
@@ -197,5 +208,15 @@ export default {
 }
 .txt_style:focus-visible {
   outline: none;
+}
+@media only screen and (max-width: 1200px) {
+  .content_style {
+    width: 50% !important;
+  }
+}
+@media only screen and (max-width: 1024px) {
+  .unique_code_style {
+    flex-direction: column;
+  }
 }
 </style>
