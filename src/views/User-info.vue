@@ -16,8 +16,8 @@
           Please complete the form to<br />
           receive your new-hire gift.
         </p>
-        <a class="user-info--link_txt_style"
-          >Click here to view the<br />
+        <a class="user-info--link_txt_style" style="color: white; ">
+          Click here to view the<br />
           hoodie conversion chart</a
         >
       </div>
@@ -101,9 +101,14 @@
           </textarea>
         </div>
         <div class="txt-single-contaner">
-          <p style="font-family: 'MyriadPro-Regular'; font-size: 1.07em; margin: 0 10px;">
+          <p
+            style="font-family: 'MyriadPro-Regular'; font-size: 1.07em; margin: 0 10px; color: black;"
+          >
             This information will be processed in accordance with our
-            <a href="https://www.sitecore.com/trust/privacy-policy" style="color: black; text-decoration: underline;"
+            <a
+              href="https://www.sitecore.com/trust/privacy-policy"
+              target="_blank"
+              style="color: black; text-decoration: underline;"
               >privacy policy</a
             ><br />
             and used only for the purpose of sending you the Sitecore new-hire
@@ -118,7 +123,7 @@
             type="button"
             class="btn_style1"
             value="REDEEM NOW"
-            style="font-size: 1.5em; letter-spacing: 0.05em;"
+            style="font-size: 2em; letter-spacing: 0.05em;"
             @click="showEditDialog()"
           />
         </div>
@@ -240,6 +245,16 @@ export default {
         this.user_info = true;
         Router.push({ path: "/user-info" });
       } else {
+        if (this.start_date.includes("/")) {
+          let time = this.start_date.split("/");
+          this.start_date = time[2] + "-" + time[1] + "-" + time[0];
+          console.log(this.start_date);
+        }else if(this.start_date.includes(" ")) {
+          let time = this.start_date.split("/");
+          this.start_date = time[2] + "-" + time[1] + "-" + time[0];
+          console.log(this.start_date);
+        }
+
         let item = {
           Name: this.preferred_name,
           Sur_Name: this.surname,
@@ -386,6 +401,7 @@ export default {
   border: none;
   font-family: "MyriadPro-Regular";
   font-size: 1em;
+  color: #000 !important;
   padding: 10px;
   width: 14vw;
   text-align: left;
@@ -425,7 +441,8 @@ export default {
   outline: none;
 }
 .btn_style1 {
-  padding: 10px;
+  font-family: "AvenirNextLTPro-Bold";
+  padding: 10px 15px 4px 15px;
   background-color: rgb(28, 166, 163);
   color: white;
   font-size: 25px;
@@ -461,5 +478,8 @@ export default {
 .welcome_last_content {
   font-family: "AvenirNextLTPro-Regular";
   font-size: 1em;
+}
+.user-info--txt_content a:hover {
+  cursor: pointer;
 }
 </style>
