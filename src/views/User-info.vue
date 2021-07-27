@@ -101,9 +101,9 @@
           </textarea>
         </div>
         <div class="txt-single-contaner">
-          <p style="font-family: 'MyriadPro-Regular'; margin: 0 10px;">
+          <p style="font-family: 'MyriadPro-Regular'; font-size: 1.07em; margin: 0 10px;">
             This information will be processed in accordance with our
-            <a href="https://www.sitecore.com/trust/privacy-policy" style="color: black; text-decoration: under-line;"
+            <a href="https://www.sitecore.com/trust/privacy-policy" style="color: black; text-decoration: underline;"
               >privacy policy</a
             ><br />
             and used only for the purpose of sending you the Sitecore new-hire
@@ -452,6 +452,7 @@ export default {
   color: rgb(28, 166, 163);
   font-family: "AvenirNextLTPro-Bold";
   font-size: 2em;
+  padding: 10px 0;
 }
 .welcome_sub_content {
   font-family: "AvenirNextLTPro-Regular";

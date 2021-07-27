@@ -188,7 +188,7 @@ export default {
   align-items: center;
   background-color: white;
   width: 50%;
-  height: 100%;
+  height: 95%;
   max-width: 300px;
 }
 .btn_style {
