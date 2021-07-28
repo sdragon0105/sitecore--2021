@@ -1,5 +1,5 @@
 import Vue from "vue";
-import BootstrapVue from "bootstrap-vue";
+// import BootstrapVue from "bootstrap-vue";
 import App from "./App.vue";
 import "./registerServiceWorker";
 import router from "./router";
@@ -16,7 +16,7 @@ Vue.use(VueAxios, axios);
 
 Vue.config.productionTip = false;
 
-Vue.use(BootstrapVue);
+// Vue.use(BootstrapVue);
 Vue.use(router);
 
 Vue.prototype.$User_Code_G;
