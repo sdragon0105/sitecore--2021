@@ -452,11 +452,6 @@ export default {
   align-items: center;
   height: 100%;
 }
-@media (max-width: 1024px) {
-  .user-info--content_style {
-    flex-direction: column !important;
-  }
-}
 .user-info--header_style {
   color: white;
   font-family: "AvenirNextLTPro-Bold";
@@ -562,16 +557,18 @@ export default {
 .welcome_header {
   color: rgb(28, 166, 163);
   font-family: "AvenirNextLTPro-Bold";
-  font-size: 2em;
+  /* font-size: 2em; */
+  font-size: 40px;
   padding: 10px 0;
 }
 .welcome_sub_content {
   font-family: "AvenirNextLTPro-Regular";
-  font-size: 1.5em;
+  /* font-size: 1.5em; */
+  font-size: 32px;
 }
 .welcome_last_content {
   font-family: "AvenirNextLTPro-Regular";
-  font-size: 1em;
+  font-size: 20px;
 }
 .user-info--txt_content a:hover {
   cursor: pointer;
@@ -642,5 +639,15 @@ export default {
 
 ::-ms-input-placeholder { /* Microsoft Edge */
  color: black !important;
+}
+
+@media only screen and (max-width: 768px) {
+  .logo_img_style1 {
+    top: 25px;
+    left: 30px;
+ }
+  .user-info--content_style {
+    flex-direction: column;
+  }
 }
 </style>

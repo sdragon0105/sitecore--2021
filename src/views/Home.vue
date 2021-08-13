@@ -275,5 +275,40 @@ export default {
   .unique_code_style {
     flex-direction: column;
   }
+  .header_style {
+    font-size: 4.5em;
+  }
+  .subtext_style {
+    font-size: 1.2em;
+  }
+  .text_btn_style {
+    width: 70%;
+  }
+}
+@media only screen and (max-width: 730px) {
+  .logo_img_style {
+  top: 25px;
+  left: 30px;
+}
+  .content_style {
+    width: 60% !important;
+}
+.text_btn_style {
+    width: 90%;
+  }
+}
+@media only screen and (max-width: 469px) {
+  .content_style {
+    width: 80% !important;
+}
+.header_style {
+    font-size: 5.5em;
+  }
+  .subtext_style {
+    font-size: 2em;
+  }
+.text_btn_style {
+    width: 95%;
+  }
 }
 </style>
